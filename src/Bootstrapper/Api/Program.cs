@@ -10,7 +10,31 @@ var builder = WebApplication.CreateBuilder(args);
 //    config.WithModules(catalogModules);
 //});
 
-builder.Services.AddCarterWithAssemblies(typeof(CatalogModule).Assembly);
+builder.Host.UseSerilog((context, config) =>
+{
+    config.ReadFrom.Configuration(context.Configuration);
+});
+
+var catalogAssembly = typeof(CatalogModule).Assembly;
+var basketAssembly = typeof(BasketModule).Assembly;
+
+builder.Services.AddCarterWithAssemblies(catalogAssembly, basketAssembly);
+
+//builder.Services.AddMediatR(config =>
+//{
+//    config.RegisterServicesFromAssemblies(catalogAssembly, basketAssembly);
+//    config.AddOpenBehavior(typeof(ValidationBehavior<,>));
+//    config.AddOpenBehavior(typeof(LoggingBehavior<,>));
+//});
+
+//builder.Services.AddValidatorsFromAssemblies([catalogAssembly, basketAssembly]);
+
+builder.Services.AddMediatRWithAssemblies([catalogAssembly, basketAssembly]);
+
+builder.Services.AddStackExchangeRedisCache(options =>
+{
+    options.Configuration = builder.Configuration.GetConnectionString("Redis");
+});
 
 builder.Services
     .AddCatalogModule(builder.Configuration)
@@ -22,10 +46,12 @@ builder.Services
 
 var app = builder.Build();
 
+// Configure the HTTP request pipeline.
+
 //app.UsePathBase("/api");
 app.MapCarter();
-
-// Configure the HTTP request pipeline.
+app.UseSerilogRequestLogging();
+app.UseExceptionHandler(options => { });
 
 app
     .UseCatalogModule()
@@ -59,7 +85,5 @@ app
 //        await context.Response.WriteAsJsonAsync(problemDetails);
 //    });
 //});
-
-app.UseExceptionHandler(options => { });
 
 app.Run();

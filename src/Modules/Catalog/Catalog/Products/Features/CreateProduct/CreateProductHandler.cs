@@ -15,7 +15,7 @@ public class CreateProductCommandValidator : AbstractValidator<CreateProductComm
     }
 }
 
-public class CreateProductHandler(CatalogDbContext dbContext, ILogger<CreateProductHandler> logger) : ICommandHandler<CreateProductCommand, CreateProductResult>
+public class CreateProductHandler(CatalogDbContext dbContext) : ICommandHandler<CreateProductCommand, CreateProductResult>
 {
     public async Task<CreateProductResult> Handle(CreateProductCommand command, CancellationToken cancellationToken)
     {
@@ -24,7 +24,7 @@ public class CreateProductHandler(CatalogDbContext dbContext, ILogger<CreateProd
         // return result
 
         // logging part
-        logger.LogInformation("CreateProductCommandHandler.Handle called with {@Command}", command);
+        //logger.LogInformation("CreateProductCommandHandler.Handle called with {@Command}", command);
 
         // actual logic
         var product = CreateNewProduct(command.Product);
