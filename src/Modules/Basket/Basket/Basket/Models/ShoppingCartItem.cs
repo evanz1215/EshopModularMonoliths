@@ -1,6 +1,4 @@
-﻿using System.Text.Json.Serialization;
-
-namespace Basket.Basket.Models;
+﻿namespace Basket.Basket.Models;
 
 public class ShoppingCartItem : Entity<Guid>
 {
@@ -34,5 +32,11 @@ public class ShoppingCartItem : Entity<Guid>
         Color = color;
         Price = price;
         ProductName = productName;
+    }
+
+    public void UpdatePrice(decimal newPrice)
+    {
+        ArgumentOutOfRangeException.ThrowIfNegativeOrZero(newPrice);
+        Price = newPrice;
     }
 }

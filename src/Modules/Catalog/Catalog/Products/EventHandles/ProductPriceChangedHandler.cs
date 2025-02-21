@@ -1,16 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using MassTransit;
+using Shared.Messaging.Events;
 
 namespace Catalog.Products.EventHandles;
 
-internal class ProductPriceChangedHandler(ILogger<ProductPriceChangedHandler> logger) : INotificationHandler<ProductPriceChangedEvent>
+internal class ProductPriceChangedHandler(IBus bus, ILogger<ProductPriceChangedHandler> logger) : INotificationHandler<ProductPriceChangedEvent>
 {
-    public Task Handle(ProductPriceChangedEvent notification, CancellationToken cancellationToken)
+    public async Task Handle(ProductPriceChangedEvent notification, CancellationToken cancellationToken)
     {
         logger.LogInformation($"Domain Event handled: {notification.GetType().Name}");
-        return Task.CompletedTask;
+
+        // Publish product price changed integration event for update basket prices
+        var integrationEvent = new ProductPriceChangedIntegrationEvent
+        {
+            ProductId = notification.Product.Id,
+            Name = notification.Product.Name,
+            Category = notification.Product.Category,
+            Description = notification.Product.Description,
+            ImageFile = notification.Product.ImageFile,
+            Price = notification.Product.Price // set updated product price
+        };
+
+        await bus.Publish(integrationEvent, cancellationToken);
     }
 }

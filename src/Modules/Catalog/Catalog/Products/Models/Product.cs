@@ -41,7 +41,7 @@ public class Product : Aggregate<Guid>
 
         // if price has changed, raise ProductPriceChanged domain event
 
-        if (price != Price)
+        if (Price != price)
         {
             Price = price;
             AddDomainEvent(new ProductPriceChangedEvent(this));
