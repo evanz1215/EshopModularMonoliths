@@ -1,1 +1,20 @@
-﻿
+﻿global using FluentValidation;
+global using Mapster;
+global using MediatR;
+global using Microsoft.AspNetCore.Builder;
+global using Microsoft.EntityFrameworkCore;
+global using Microsoft.EntityFrameworkCore.Diagnostics;
+global using Microsoft.EntityFrameworkCore.Metadata.Builders;
+global using Microsoft.Extensions.Configuration;
+global using Microsoft.Extensions.DependencyInjection;
+global using Microsoft.Extensions.Logging;
+global using Ordering.Data;
+global using Ordering.Orders.Dtos;
+global using Ordering.Orders.Events;
+global using Ordering.Orders.Models;
+global using Ordering.Orders.ValueObjects;
+global using Shared.Contracts.CQRS;
+global using Shared.Data;
+global using Shared.Data.Interceptors;
+global using Shared.DDD;
+global using Shared.Pagination;

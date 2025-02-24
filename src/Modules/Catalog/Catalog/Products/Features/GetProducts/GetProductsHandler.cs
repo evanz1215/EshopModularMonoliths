@@ -1,6 +1,6 @@
 ﻿namespace Catalog.Products.Features.GetProducts;
 
-public record GetProductsQueyr(PaginatedRequest PaginatedRequest) : IQuery<GetProductsResult>;
+public record GetProductsQueyr(PaginationRequest PaginatedRequest) : IQuery<GetProductsResult>;
 
 public record GetProductsResult(PaginatedResult<ProductDto> Products);
 
