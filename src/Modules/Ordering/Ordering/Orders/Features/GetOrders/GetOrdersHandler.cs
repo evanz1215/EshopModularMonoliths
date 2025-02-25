@@ -1,10 +1,8 @@
 ﻿namespace Ordering.Orders.Features.GetOrders;
-public record GetOrdersQuery(PaginationRequest PaginationRequest)
-    : IQuery<GetOrdersResult>;
+public record GetOrdersQuery(PaginationRequest PaginationRequest) : IQuery<GetOrdersResult>;
 public record GetOrdersResult(PaginatedResult<OrderDto> Orders);
 
-internal class GetOrdersHandler(OrderingDbContext dbContext)
-    : IQueryHandler<GetOrdersQuery, GetOrdersResult>
+internal class GetOrdersHandler(OrderingDbContext dbContext) : IQueryHandler<GetOrdersQuery, GetOrdersResult>
 {
     public async Task<GetOrdersResult> Handle(GetOrdersQuery query, CancellationToken cancellationToken)
     {

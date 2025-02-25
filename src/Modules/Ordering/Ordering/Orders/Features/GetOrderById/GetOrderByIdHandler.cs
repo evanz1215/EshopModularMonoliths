@@ -1,10 +1,8 @@
 ﻿namespace Ordering.Orders.Features.GetOrderById;
-public record GetOrderByIdQuery(Guid Id)
-    : IQuery<GetOrderByIdResult>;
+public record GetOrderByIdQuery(Guid Id) : IQuery<GetOrderByIdResult>;
 public record GetOrderByIdResult(OrderDto Order);
 
-internal class GetOrderByIdHandler(OrderingDbContext dbContext)
-    : IQueryHandler<GetOrderByIdQuery, GetOrderByIdResult>
+internal class GetOrderByIdHandler(OrderingDbContext dbContext) : IQueryHandler<GetOrderByIdQuery, GetOrderByIdResult>
 {
     public async Task<GetOrderByIdResult> Handle(GetOrderByIdQuery query, CancellationToken cancellationToken)
     {
@@ -15,7 +13,7 @@ internal class GetOrderByIdHandler(OrderingDbContext dbContext)
 
         if (order is null)
         {
-            //throw new OrderNotFoundException(query.Id);
+            throw new OrderNotFoundException(query.Id);
         }
 
         var orderDto = order.Adapt<OrderDto>();

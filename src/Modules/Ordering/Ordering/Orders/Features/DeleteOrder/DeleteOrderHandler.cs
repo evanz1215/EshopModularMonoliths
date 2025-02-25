@@ -1,7 +1,6 @@
 ﻿namespace Ordering.Orders.Features.DeleteOrder;
 
-public record DeleteOrderCommand(Guid OrderId)
-    : ICommand<DeleteOrderResult>;
+public record DeleteOrderCommand(Guid OrderId) : ICommand<DeleteOrderResult>;
 public record DeleteOrderResult(bool IsSuccess);
 
 public class DeleteOrderCommandValidator : AbstractValidator<DeleteOrderCommand>
@@ -22,7 +21,7 @@ internal class DeleteOrderHandler(OrderingDbContext dbContext)
 
         if (order is null)
         {
-            //throw new OrderNotFoundException(command.OrderId);
+            throw new OrderNotFoundException(command.OrderId);
         }
 
         dbContext.Orders.Remove(order);
