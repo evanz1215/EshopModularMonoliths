@@ -39,7 +39,7 @@ builder.Services.AddStackExchangeRedisCache(options =>
     options.Configuration = builder.Configuration.GetConnectionString("Redis");
 });
 
-builder.Services.AddMassTransitWithAssemblies(configuration: builder.Configuration, catalogAssembly, basketAssembly);
+builder.Services.AddMassTransitWithAssemblies(configuration: builder.Configuration, catalogAssembly, basketAssembly, orderingAssembly);
 
 builder.Services.AddKeycloakWebApiAuthentication(builder.Configuration);
 builder.Services.AddAuthorization();

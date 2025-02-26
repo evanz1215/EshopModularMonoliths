@@ -11,10 +11,9 @@ public static class OrderingModule
 
         services.AddDbContext<OrderingDbContext>((sp, options) =>
         {
-            options.AddInterceptors(sp.GetRequiredService<ISaveChangesInterceptor>());
+            options.AddInterceptors(sp.GetServices<ISaveChangesInterceptor>());
             options.UseNpgsql(connectionString);
         });
-
         return services;
     }
 

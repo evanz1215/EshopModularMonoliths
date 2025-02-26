@@ -13,9 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Basket\Features\CheckoutBasket\" />
     <Folder Include="Data\Migrations\" />
-    <Folder Include="Data\Processors\" />
   </ItemGroup>
 
 </Project>
